@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/movie_detail_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background"
+    tools:context=".ui.fragment.MovieDetailFragment">
+
+    <ImageView
+        android:id="@+id/movie_detail_cover"
+        android:layout_width="@dimen/movie_cover_width"
+        android:layout_height="@dimen/movie_cover_height"
+        android:layout_alignParentStart="true"
+        android:layout_margin="@dimen/movie_main_margin"
+        android:scaleType="centerInside"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/movie_detail_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="@dimen/movie_margin_end"
+        android:layout_marginStart="@dimen/movie_main_margin"
+        android:layout_marginTop="@dimen/movie_main_margin"
+        android:layout_toEndOf="@+id/movie_detail_cover"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/color_text_sub" />
+
+    <TextView
+        android:id="@+id/actor_birthday_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/movie_detail_title"
+        android:layout_marginEnd="@dimen/movie_margin_end"
+        android:layout_marginStart="@dimen/movie_main_margin"
+        android:layout_marginTop="@dimen/movie_main_margin"
+        android:layout_toEndOf="@+id/movie_detail_cover"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/color_text_main" />
+
+    <TextView
+        android:id="@+id/movie_detail_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/movie_detail_cover"
+        android:layout_marginEnd="@dimen/movie_margin_end"
+        android:layout_marginStart="@dimen/movie_main_margin"
+        android:layout_marginTop="@dimen/movie_main_margin"
+        android:textColor="@color/color_text_main" />
+
+    <TextView
+        android:id="@+id/movie_cast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/movie_detail_desc"
+        android:layout_marginEnd="@dimen/movie_margin_end"
+        android:layout_marginStart="@dimen/movie_main_margin"
+        android:layout_marginTop="@dimen/movie_main_margin"
+        android:text="@string/cast"
+        android:textColor="@color/color_text_main" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/movie_cast_rec_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/movie_cast"
+        android:overScrollMode="never"
+        android:scrollbars="vertical" />
+
+</RelativeLayout>

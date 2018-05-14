@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">WeekMovies</string>
+    <string name="filmography">Filmography:</string>
+    <string name="cast">Cast:</string>
+    <string name="error">Error</string>
+
+    <string name="nav_title_new_week_movies">New Premieres</string>
+    <string name="nav_title_watchlist">Your Watchlist</string>
+    <string name="nav_drawer_open">Drawer opened</string>
+    <string name="nav_drawer_close">Drawer closed</string>
+    <string name="week_premieres">Premieres</string>
+    <string name="action_search">Search</string>
+</resources>
