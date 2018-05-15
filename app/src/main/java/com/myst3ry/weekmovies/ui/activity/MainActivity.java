@@ -51,7 +51,10 @@ public final class MainActivity extends AppCompatActivity implements OnMovieClic
     }
 
     private void initUI() {
-        switchContent(new WeekMoviesFragment());
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.content_frame, new WeekMoviesFragment())
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .commit();
     }
 
     public void setupDrawer() {

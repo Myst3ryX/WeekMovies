@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.myst3ry.weekmovies.R;
+import com.myst3ry.weekmovies.model.Movie;
+
+import java.util.ArrayList;
 
 public final class WatchlistFragment extends WeekMoviesFragment {
 
@@ -21,5 +24,6 @@ public final class WatchlistFragment extends WeekMoviesFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle(getString(R.string.watchlist_title));
+        updateUI(new ArrayList<Movie>());
     }
 }

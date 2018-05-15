@@ -31,7 +31,7 @@
             android:layout_marginTop="@dimen/movie_main_margin"
             android:layout_toEndOf="@+id/movie_detail_cover"
             android:ellipsize="end"
-            android:maxLines="1"
+            android:maxLines="2"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/color_text_main" />
 

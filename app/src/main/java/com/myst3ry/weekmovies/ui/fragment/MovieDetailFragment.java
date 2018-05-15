@@ -44,7 +44,6 @@ public final class MovieDetailFragment extends BaseFragment {
     TextView addToWatchlistBtn;
 
     private Movie movie;
-    private List<Actor> actors;
     private ActorsAdapter adapter;
 
     public static MovieDetailFragment newInstance(final Movie movie) {
@@ -79,7 +78,7 @@ public final class MovieDetailFragment extends BaseFragment {
         addToWatchlistBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //add movie to bd
+                //add movie to DB
             }
         });
     }
@@ -97,8 +96,9 @@ public final class MovieDetailFragment extends BaseFragment {
             titleView.setText(movie.getTitle());
             releaseDateView.setText(movie.getReleaseDate());
             descriptionView.setText(movie.getDescription());
-            actors = movie.getActors();
-            updateUI();
+
+            final List<Actor> actors = movie.getActors();
+            updateUI(actors);
 
             getActivity().setTitle(movie.getTitle());
         }
@@ -108,13 +108,10 @@ public final class MovieDetailFragment extends BaseFragment {
         if (!(getActivity() instanceof OnActorClickListener)) {
             throw new IllegalArgumentException("Activity should implements OnActorClickListener");
         }
-
         adapter = new ActorsAdapter((OnActorClickListener) getActivity());
     }
 
-    private void updateUI() {
-        if (actors != null) {
-            adapter.setActors(actors);
-        }
+    private void updateUI(@NonNull final List<Actor> actors) {
+        adapter.setActors(actors);
     }
 }
