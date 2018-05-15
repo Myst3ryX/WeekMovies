@@ -64,7 +64,7 @@ public final class ActorFragment extends BaseFragment {
 
         initAdapter();
 
-        Bundle args = getArguments();
+        final Bundle args = getArguments();
         if (args != null) {
             actor = (Actor) getArguments().getSerializable(ARG_CURRENT_ACTOR);
             showContent();

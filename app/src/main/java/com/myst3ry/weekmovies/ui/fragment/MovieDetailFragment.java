@@ -67,7 +67,7 @@ public final class MovieDetailFragment extends BaseFragment {
 
         initAdapter();
 
-        Bundle args = getArguments();
+        final Bundle args = getArguments();
         if (args != null) {
             movie = (Movie) getArguments().getSerializable(ARG_CURRENT_MOVIE);
             showContent();

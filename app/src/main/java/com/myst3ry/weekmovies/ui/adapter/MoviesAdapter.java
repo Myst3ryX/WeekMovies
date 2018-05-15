@@ -71,6 +71,16 @@ public final class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.Movi
         notifyDataSetChanged();
     }
 
+    public List<Movie> setFilter(final String filterText) {
+        final List<Movie> filteredMovies = new ArrayList<>();
+        for (Movie movie : movies) {
+            if (movie.getTitle().toLowerCase().contains(filterText.toLowerCase())) {
+                filteredMovies.add(movie);
+            }
+        }
+        return filteredMovies;
+    }
+
     public final class MovieHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.movie_cover)

@@ -10,7 +10,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.myst3ry.weekmovies.R;
@@ -35,6 +34,7 @@ public final class MainActivity extends AppCompatActivity implements OnMovieClic
     @BindView(R.id.drawer_main)
     DrawerLayout drawer;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +47,7 @@ public final class MainActivity extends AppCompatActivity implements OnMovieClic
         if (savedInstanceState == null) {
             initUI();
         }
+
     }
 
     private void initUI() {
@@ -80,7 +81,7 @@ public final class MainActivity extends AppCompatActivity implements OnMovieClic
         });
     }
 
-    private void switchContent(final Fragment fragment) {
+    public void switchContent(final Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, fragment)
                 .addToBackStack(fragment.getClass().getSimpleName())
@@ -98,23 +99,6 @@ public final class MainActivity extends AppCompatActivity implements OnMovieClic
     public void onActorClick(@NonNull final Actor actor) {
         Fragment fragment = ActorFragment.newInstance(actor);
         switchContent(fragment);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        final int id = item.getItemId();
-        switch (id) {
-            case R.id.action_search:
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
     @Override

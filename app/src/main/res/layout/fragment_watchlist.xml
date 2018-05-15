@@ -8,7 +8,7 @@
     tools:context=".ui.fragment.WatchlistFragment">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/week_movies_rec_view"
+        android:id="@+id/movies_rec_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/main_padding"

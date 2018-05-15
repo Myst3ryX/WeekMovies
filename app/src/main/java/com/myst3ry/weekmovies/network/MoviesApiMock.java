@@ -21,7 +21,7 @@ public final class MoviesApiMock {
         for (int i = 0; i < 20; i++) {
             Movie movie = new Movie();
             movie.setCoverUrl("");
-            movie.setTitle("Star Wars");
+            movie.setTitle("Star Wars_" + i);
             movie.setReleaseDate("1976");
             movie.setDescription("In far far galaxy...");
 

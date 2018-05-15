@@ -7,4 +7,11 @@
     android:background="@color/color_background"
     tools:context=".ui.fragment.SearchResultFragment">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/movies_rec_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/main_padding"
+        android:scrollbars="vertical" />
+
 </FrameLayout>

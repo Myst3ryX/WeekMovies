@@ -22,5 +22,4 @@ public final class WatchlistFragment extends WeekMoviesFragment {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle(getString(R.string.watchlist_title));
     }
-
 }
