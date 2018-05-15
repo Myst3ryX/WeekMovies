@@ -12,7 +12,7 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:theme="@style/AppTheme.Toolbar"
-            android:label="@string/week_premieres">
+            android:label="@string/week_premieres_title">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

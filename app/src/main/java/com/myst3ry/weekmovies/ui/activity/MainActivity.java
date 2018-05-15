@@ -3,6 +3,7 @@ package com.myst3ry.weekmovies.ui.activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,8 +14,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.myst3ry.weekmovies.R;
+import com.myst3ry.weekmovies.listeners.OnActorClickListener;
 import com.myst3ry.weekmovies.listeners.OnMovieClickListener;
+import com.myst3ry.weekmovies.model.Actor;
 import com.myst3ry.weekmovies.model.Movie;
+import com.myst3ry.weekmovies.ui.fragment.ActorFragment;
 import com.myst3ry.weekmovies.ui.fragment.MovieDetailFragment;
 import com.myst3ry.weekmovies.ui.fragment.WatchlistFragment;
 import com.myst3ry.weekmovies.ui.fragment.WeekMoviesFragment;
@@ -22,7 +26,7 @@ import com.myst3ry.weekmovies.ui.fragment.WeekMoviesFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public final class MainActivity extends AppCompatActivity implements OnMovieClickListener {
+public final class MainActivity extends AppCompatActivity implements OnMovieClickListener, OnActorClickListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -46,9 +50,7 @@ public final class MainActivity extends AppCompatActivity implements OnMovieClic
     }
 
     private void initUI() {
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.content_frame, new WeekMoviesFragment(), "week_movies")
-                .commit();
+        switchContent(new WeekMoviesFragment());
     }
 
     public void setupDrawer() {
@@ -64,19 +66,11 @@ public final class MainActivity extends AppCompatActivity implements OnMovieClic
 
                 switch (id) {
                     case R.id.nav_item_new_week_movies:
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.content_frame, new WeekMoviesFragment(), "week_movies")
-                                .addToBackStack(WeekMoviesFragment.class.getSimpleName())
-                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                                .commit();
+                        switchContent(new WeekMoviesFragment());
                         drawer.closeDrawer(GravityCompat.START);
                         return true;
                     case R.id.nav_item_watchlist:
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.content_frame, new WatchlistFragment(), "watchlist")
-                                .addToBackStack(WatchlistFragment.class.getSimpleName())
-                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                                .commit();
+                        switchContent(new WatchlistFragment());
                         drawer.closeDrawer(GravityCompat.START);
                         return true;
                     default:
@@ -86,15 +80,25 @@ public final class MainActivity extends AppCompatActivity implements OnMovieClic
         });
     }
 
-    @Override
-    public void onMovieClick(@NonNull final Movie movie, int position) {
+    private void switchContent(final Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new MovieDetailFragment(), "movie_detail")
-                .addToBackStack(MovieDetailFragment.class.getSimpleName())
+                .replace(R.id.content_frame, fragment)
+                .addToBackStack(fragment.getClass().getSimpleName())
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .commit();
     }
 
+    @Override
+    public void onMovieClick(@NonNull final Movie movie) {
+        Fragment fragment = MovieDetailFragment.newInstance(movie);
+        switchContent(fragment);
+    }
+
+    @Override
+    public void onActorClick(@NonNull final Actor actor) {
+        Fragment fragment = ActorFragment.newInstance(actor);
+        switchContent(fragment);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

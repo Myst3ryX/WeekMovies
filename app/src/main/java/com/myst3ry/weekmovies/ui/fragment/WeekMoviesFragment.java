@@ -3,7 +3,6 @@ package com.myst3ry.weekmovies.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,15 +18,12 @@ import com.myst3ry.weekmovies.ui.adapter.MoviesAdapter;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
-public class WeekMoviesFragment extends Fragment {
+public class WeekMoviesFragment extends BaseFragment {
 
+    private MoviesApiMock api;
     private MoviesAdapter adapter;
     private List<Movie> movies;
-    private MoviesApiMock api;
-    private Unbinder unbinder;
 
     @BindView(R.id.week_movies_rec_view)
     RecyclerView moviesRecyclerView;
@@ -35,17 +31,18 @@ public class WeekMoviesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        api = new MoviesApiMock(); //mock
+        prepareContent();
+
         return inflater.inflate(R.layout.fragment_week_movies, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        unbinder = ButterKnife.bind(this, view);
-        api = new MoviesApiMock(); //mock
-
+        getActivity().setTitle(getString(R.string.week_premieres_title));
         initAdapter();
-
         moviesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         moviesRecyclerView.setAdapter(adapter);
     }
@@ -53,8 +50,11 @@ public class WeekMoviesFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        this.movies = api.getMovies();
         updateUI();
+    }
+
+    private void prepareContent() {
+        this.movies = api.getMovies();
     }
 
     private void initAdapter() {
@@ -69,11 +69,5 @@ public class WeekMoviesFragment extends Fragment {
         if (movies != null) {
             adapter.setMovies(movies);
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 }

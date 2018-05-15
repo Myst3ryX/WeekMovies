@@ -20,7 +20,7 @@ public final class WatchlistFragment extends WeekMoviesFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        getActivity().setTitle(getString(R.string.watchlist_title));
     }
 
 }

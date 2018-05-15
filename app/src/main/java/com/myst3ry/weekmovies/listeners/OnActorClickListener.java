@@ -6,6 +6,6 @@ import com.myst3ry.weekmovies.model.Actor;
 
 public interface OnActorClickListener {
 
-    void onActorClick(@NonNull final Actor actor, final int position);
+    void onActorClick(@NonNull final Actor actor);
 }
 

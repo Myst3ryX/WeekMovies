@@ -13,7 +13,7 @@
         android:background="@color/color_primary"
         app:subtitleTextAppearance="?android:attr/textAppearanceSmall"
         app:subtitleTextColor="@color/color_text_sub"
-        app:titleTextAppearance="?android:attr/textAppearanceLarge"
+        app:titleTextAppearance="?android:attr/textAppearanceMedium"
         app:titleTextColor="@color/color_text_main" />
 
 </android.support.design.widget.AppBarLayout>

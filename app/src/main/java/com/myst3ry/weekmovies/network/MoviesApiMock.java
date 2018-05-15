@@ -31,6 +31,14 @@ public final class MoviesApiMock {
                 actor.setName("Mark Hamill");
                 actor.setBirthdayDate("05.12.1951");
                 actor.setBiography("Mark Hamill was born in 1951...");
+
+                List<Movie> actorMovies = new ArrayList<>();
+                actorMovies.add(movie);
+                actorMovies.add(movie);
+                actorMovies.add(movie);
+                actorMovies.add(movie);
+                actor.setMovies(actorMovies);
+
                 actors.add(actor);
             }
 

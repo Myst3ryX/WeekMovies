@@ -1,9 +1,9 @@
 package com.myst3ry.weekmovies.model;
 
-
+import java.io.Serializable;
 import java.util.List;
 
-public final class Movie {
+public final class Movie implements Serializable {
 
     private String coverUrl;
     private String title;

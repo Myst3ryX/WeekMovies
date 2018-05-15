@@ -9,13 +9,16 @@
     <dimen name="item_margin_start">6dp</dimen>
     <dimen name="item_line_divider">6dp</dimen>
 
-    <dimen name="actor_photo_width">400dp</dimen>
-    <dimen name="actor_photo_height">600dp</dimen>
+    <dimen name="item_image_min_width">160dp</dimen>
+    <dimen name="item_image_min_height">120dp</dimen>
+
+    <dimen name="actor_photo_width">160dp</dimen>
+    <dimen name="actor_photo_height">240dp</dimen>
     <dimen name="actor_main_margin">10dp</dimen>
     <dimen name="actor_margin_end">50dp</dimen>
 
-    <dimen name="movie_cover_width">400dp</dimen>
-    <dimen name="movie_cover_height">600dp</dimen>
+    <dimen name="movie_cover_width">160dp</dimen>
+    <dimen name="movie_cover_height">240dp</dimen>
     <dimen name="movie_main_margin">10dp</dimen>
     <dimen name="movie_margin_end">50dp</dimen>
 

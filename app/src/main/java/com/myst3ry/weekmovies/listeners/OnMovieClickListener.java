@@ -6,5 +6,5 @@ import com.myst3ry.weekmovies.model.Movie;
 
 public interface OnMovieClickListener {
 
-    void onMovieClick(@NonNull final Movie movie, final int position);
+    void onMovieClick(@NonNull final Movie movie);
 }

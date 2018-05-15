@@ -86,7 +86,7 @@ public final class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.Movi
         @OnClick(R.id.movie_item)
         public void onClick() {
             final int position = getLayoutPosition();
-            onMovieClickListener.onMovieClick(getMovie(position), position);
+            onMovieClickListener.onMovieClick(getMovie(position));
         }
 
         MovieHolder(View itemView) {

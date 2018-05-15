@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/actor_item"
-    android:layout_width="match_parent"
+    android:id="@+id/actor_container"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@android:color/transparent"
-    android:minHeight="@dimen/item_main_image_height">
+    android:minHeight="@dimen/item_image_min_height"
+    android:minWidth="@dimen/item_image_min_width">
 
     <ImageView
         android:id="@+id/actor_photo_image"

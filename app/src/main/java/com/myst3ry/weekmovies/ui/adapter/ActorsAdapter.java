@@ -82,7 +82,7 @@ public final class ActorsAdapter extends RecyclerView.Adapter<ActorsAdapter.Acto
         @OnClick(R.id.actor_container)
         public void onClick() {
             final int position = getLayoutPosition();
-            onActorClickListener.onActorClick(getActor(position), position);
+            onActorClickListener.onActorClick(getActor(position));
         }
 
         ActorHolder(View itemView) {

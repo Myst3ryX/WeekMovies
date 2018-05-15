@@ -1,8 +1,9 @@
 package com.myst3ry.weekmovies.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public final class Actor {
+public final class Actor implements Serializable {
 
     private String photoUrl;
     private String name;
