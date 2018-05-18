@@ -13,19 +13,29 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.myst3ry.weekmovies.R;
+import com.myst3ry.weekmovies.WeekMoviesApp;
 import com.myst3ry.weekmovies.listeners.OnActorClickListener;
 import com.myst3ry.weekmovies.listeners.OnMovieClickListener;
 import com.myst3ry.weekmovies.model.Actor;
+import com.myst3ry.weekmovies.model.DaoSession;
 import com.myst3ry.weekmovies.model.Movie;
+import com.myst3ry.weekmovies.model.MovieDao;
+import com.myst3ry.weekmovies.model.MovieToWatchDao;
+import com.myst3ry.weekmovies.network.MoviesApiMock;
 import com.myst3ry.weekmovies.ui.fragment.ActorFragment;
 import com.myst3ry.weekmovies.ui.fragment.MovieDetailFragment;
 import com.myst3ry.weekmovies.ui.fragment.WatchlistFragment;
 import com.myst3ry.weekmovies.ui.fragment.WeekMoviesFragment;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public final class MainActivity extends AppCompatActivity implements OnMovieClickListener, OnActorClickListener {
+
+    private MovieDao movieDao;
+    private MovieToWatchDao movieToWatchDao;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -34,20 +44,28 @@ public final class MainActivity extends AppCompatActivity implements OnMovieClic
     @BindView(R.id.drawer_main)
     DrawerLayout drawer;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        //api instance
+        final MoviesApiMock api = new MoviesApiMock();
+
+        //prepare dao
+        final DaoSession daoSession = ((WeekMoviesApp) getApplication()).getDaoSession();
+        movieDao = daoSession.getMovieDao();
+        movieToWatchDao = daoSession.getMovieToWatchDao();
+
         setSupportActionBar(toolbar);
         setupDrawer();
 
         if (savedInstanceState == null) {
+            final List<Movie> movies = api.getMovies();
+            movieDao.insertOrReplaceInTx(movies);
             initUI();
         }
-
     }
 
     private void initUI() {
@@ -94,14 +112,22 @@ public final class MainActivity extends AppCompatActivity implements OnMovieClic
 
     @Override
     public void onMovieClick(@NonNull final Movie movie) {
-        Fragment fragment = MovieDetailFragment.newInstance(movie);
+        final Fragment fragment = MovieDetailFragment.newInstance(movie);
         switchContent(fragment);
     }
 
     @Override
     public void onActorClick(@NonNull final Actor actor) {
-        Fragment fragment = ActorFragment.newInstance(actor);
+        final Fragment fragment = ActorFragment.newInstance(actor);
         switchContent(fragment);
+    }
+
+    public MovieDao getMovieDao() {
+        return movieDao;
+    }
+
+    public MovieToWatchDao getMovieToWatchDao() {
+        return movieToWatchDao;
     }
 
     @Override
@@ -112,5 +138,4 @@ public final class MainActivity extends AppCompatActivity implements OnMovieClic
             super.onBackPressed();
         }
     }
-
 }

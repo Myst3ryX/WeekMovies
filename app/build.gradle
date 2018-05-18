@@ -1,5 +1,5 @@
-//apply plugin: 'org.greenrobot.greendao'
 apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 27
@@ -19,9 +19,9 @@ android {
     }
 }
 
-//greendao{
-//    schemaVersion 1
-//}
+greendao{
+    schemaVersion 3
+}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -40,7 +40,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
 
     //greendao
-    //implementation 'org.greenrobot:greendao:3.2.0'
+    implementation 'org.greenrobot:greendao:3.2.2'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

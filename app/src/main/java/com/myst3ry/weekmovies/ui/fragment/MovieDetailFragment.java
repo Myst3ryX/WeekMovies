@@ -1,6 +1,5 @@
 package com.myst3ry.weekmovies.ui.fragment;
 
-
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
@@ -19,7 +19,10 @@ import com.myst3ry.weekmovies.R;
 import com.myst3ry.weekmovies.listeners.OnActorClickListener;
 import com.myst3ry.weekmovies.model.Actor;
 import com.myst3ry.weekmovies.model.Movie;
+import com.myst3ry.weekmovies.model.MovieToWatch;
+import com.myst3ry.weekmovies.model.MovieToWatchDao;
 import com.myst3ry.weekmovies.network.GlideApp;
+import com.myst3ry.weekmovies.ui.activity.MainActivity;
 import com.myst3ry.weekmovies.ui.adapter.ActorsAdapter;
 
 import java.util.List;
@@ -29,6 +32,10 @@ import butterknife.BindView;
 public final class MovieDetailFragment extends BaseFragment {
 
     private static final String ARG_CURRENT_MOVIE = BuildConfig.APPLICATION_ID + ".arg.current_movie";
+
+    private Movie movie;
+    private ActorsAdapter adapter;
+    private MovieToWatchDao movieToWatchDao;
 
     @BindView(R.id.movie_detail_cover)
     ImageView coverView;
@@ -40,11 +47,8 @@ public final class MovieDetailFragment extends BaseFragment {
     TextView descriptionView;
     @BindView(R.id.movie_cast_rec_view)
     RecyclerView actorsView;
-    @BindView(R.id.movie_detail_add_btn)
-    TextView addToWatchlistBtn;
-
-    private Movie movie;
-    private ActorsAdapter adapter;
+    @BindView(R.id.movie_detail_watchlist_btn)
+    TextView watchlistBtn;
 
     public static MovieDetailFragment newInstance(final Movie movie) {
         final MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
@@ -63,45 +67,74 @@ public final class MovieDetailFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        movieToWatchDao = ((MainActivity) getActivity()).getMovieToWatchDao();
 
         initAdapter();
 
         final Bundle args = getArguments();
         if (args != null) {
             movie = (Movie) getArguments().getSerializable(ARG_CURRENT_MOVIE);
-            showContent();
+            if (movie != null) {
+                showContent(movie);
+            }
         }
 
         actorsView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         actorsView.setAdapter(adapter);
 
-        addToWatchlistBtn.setOnClickListener(new View.OnClickListener() {
+        watchlistBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //add movie to DB
+                if (isInWatchlist(movie)) {
+                    movieToWatchDao.deleteByKey(movie.getId());
+                    watchlistBtn.setText(R.string.add_to_watchlist_btn);
+                    Toast.makeText(getActivity(), String.format(getString(R.string.removed_successful),
+                            movie.getTitle()), Toast.LENGTH_SHORT).show();
+                } else {
+                    movieToWatchDao.insertOrReplace(getMovieToWatch(movie));
+                    watchlistBtn.setText(R.string.remove_from_watchlist_btn);
+                    Toast.makeText(getActivity(), String.format(getString(R.string.added_successful),
+                            movie.getTitle()), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
-    private void showContent() {
-        if (movie != null) {
-            GlideApp.with(this)
-                    .load(movie.getCoverUrl())
-                    .centerInside()
-                    .placeholder(R.color.color_placeholder)
-                    .transition(DrawableTransitionOptions.withCrossFade(400))
-                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                    .into(coverView);
+    private void showContent(@NonNull final Movie movie) {
 
-            titleView.setText(movie.getTitle());
-            releaseDateView.setText(movie.getReleaseDate());
-            descriptionView.setText(movie.getDescription());
+        getActivity().setTitle(movie.getTitle());
 
-            final List<Actor> actors = movie.getActors();
-            updateUI(actors);
+        GlideApp.with(this)
+                .load(movie.getCoverUrl())
+                .centerInside()
+                .placeholder(R.color.color_placeholder)
+                .transition(DrawableTransitionOptions.withCrossFade(400))
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                .into(coverView);
 
-            getActivity().setTitle(movie.getTitle());
+        titleView.setText(movie.getTitle());
+        releaseDateView.setText(movie.getReleaseDate());
+        descriptionView.setText(movie.getDescription());
+
+        if (isInWatchlist(movie)) {
+            watchlistBtn.setText(R.string.remove_from_watchlist_btn);
+        } else {
+            watchlistBtn.setText(R.string.add_to_watchlist_btn);
         }
+
+        final List<Actor> actors = movie.getActors();
+        updateUI(actors);
+    }
+
+    private boolean isInWatchlist(@NonNull final Movie movie) {
+        return movieToWatchDao.loadDeep(movie.getId()) != null;
+    }
+
+    private MovieToWatch getMovieToWatch(@NonNull final Movie movie) {
+        final MovieToWatch movieToWatch = new MovieToWatch();
+        final Long movieId = movie.getId();
+        movieToWatch.setId(movieId);
+        return movieToWatch;
     }
 
     private void initAdapter() {

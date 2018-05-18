@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Премьеры в кино</string>
+    <string name="error">Ошибка</string>
+
+    <string name="nav_title_new_week_movies">Премьеры</string>
+    <string name="nav_title_watchlist">Список просмотра</string>
+    <string name="nav_drawer_open">Навигационное меню открыто</string>
+    <string name="nav_drawer_close">Навигационное меню закрыто</string>
+
+    <string name="week_premieres_title">Премьеры недели</string>
+    <string name="watchlist_title">Ваш список просмотра</string>
+    <string name="search_title">Результаты поиска</string>
+
+    <string name="action_search">Поиск</string>
+
+    <string name="filmography">Фильмография:</string>
+    <string name="cast">В ролях:</string>
+
+    <string name="watchlist_empty_text">Ваш список просмотра пуст</string>
+    <string name="added_successful">Фильм \"%s\" был добавлен в ваш список просмотра</string>
+    <string name="removed_successful">Фильм \"%s\" был удален из вашего списка просмотра</string>
+    <string name="add_to_watchlist_btn">Добавить в список просмотра</string>
+    <string name="remove_from_watchlist_btn">Удалить из списка просмотра</string>
+
+</resources>

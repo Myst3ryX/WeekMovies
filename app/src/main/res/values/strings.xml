@@ -1,17 +1,25 @@
 <resources>
     <string name="app_name">WeekMovies</string>
-    <string name="filmography">Filmography:</string>
-    <string name="cast">Cast:</string>
     <string name="error">Error</string>
 
     <string name="nav_title_new_week_movies">New Premieres</string>
     <string name="nav_title_watchlist">Watchlist</string>
     <string name="nav_drawer_open">Drawer opened</string>
     <string name="nav_drawer_close">Drawer closed</string>
+
     <string name="week_premieres_title">Premieres</string>
-    <string name="action_search">Search</string>
-    <string name="add_to_watchlist_btn">Add to watchlist</string>
     <string name="watchlist_title">Your watchlist</string>
     <string name="search_title">Search result</string>
-    <string name="action_clear_search">Clear search</string>
+
+    <string name="action_search">Search</string>
+
+    <string name="filmography">Filmography:</string>
+    <string name="cast">Cast:</string>
+
+    <string name="watchlist_empty_text">Your watchlist is empty</string>
+    <string name="added_successful">Movie \"%s\" has been added to watchlist</string>
+    <string name="removed_successful">Movie \"%s\" has been removed from watchlist</string>
+    <string name="add_to_watchlist_btn">Add to watchlist</string>
+    <string name="remove_from_watchlist_btn">Remove from watchlist</string>
+
 </resources>

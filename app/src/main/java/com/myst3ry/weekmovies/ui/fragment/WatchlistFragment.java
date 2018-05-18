@@ -6,13 +6,25 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.myst3ry.weekmovies.R;
 import com.myst3ry.weekmovies.model.Movie;
+import com.myst3ry.weekmovies.model.MovieToWatch;
+import com.myst3ry.weekmovies.model.MovieToWatchDao;
+import com.myst3ry.weekmovies.ui.activity.MainActivity;
+
+import org.greenrobot.greendao.query.Query;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
 
 public final class WatchlistFragment extends WeekMoviesFragment {
+
+    @BindView(R.id.watchlist_empty_text)
+    TextView emptyText;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -24,6 +36,26 @@ public final class WatchlistFragment extends WeekMoviesFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle(getString(R.string.watchlist_title));
-        updateUI(new ArrayList<Movie>());
+
+        final MovieToWatchDao movieToWatchDao = ((MainActivity) getActivity()).getMovieToWatchDao();
+
+        if (movieToWatchDao != null) {
+            final List<Movie> movies = new ArrayList<>();
+
+            final Query<MovieToWatch> movieToWatchQuery = movieToWatchDao.queryBuilder().build();
+            final List<MovieToWatch> watchlist = movieToWatchQuery.list();
+
+            for (MovieToWatch mtw : watchlist) {
+                movies.add(mtw.getMovie());
+            }
+
+            if (movies.isEmpty()) {
+                emptyText.setVisibility(View.VISIBLE);
+            } else {
+                emptyText.setVisibility(View.INVISIBLE);
+            }
+
+            updateUI(movies);
+        }
     }
 }

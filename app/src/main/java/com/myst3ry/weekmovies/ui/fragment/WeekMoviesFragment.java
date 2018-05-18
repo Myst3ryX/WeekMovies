@@ -19,9 +19,11 @@ import android.view.ViewGroup;
 import com.myst3ry.weekmovies.R;
 import com.myst3ry.weekmovies.listeners.OnMovieClickListener;
 import com.myst3ry.weekmovies.model.Movie;
-import com.myst3ry.weekmovies.network.MoviesApiMock;
+import com.myst3ry.weekmovies.model.MovieDao;
 import com.myst3ry.weekmovies.ui.activity.MainActivity;
 import com.myst3ry.weekmovies.ui.adapter.MoviesAdapter;
+
+import org.greenrobot.greendao.query.Query;
 
 import java.util.List;
 
@@ -29,9 +31,7 @@ import butterknife.BindView;
 
 public class WeekMoviesFragment extends BaseFragment {
 
-    private MoviesApiMock api;
     private MoviesAdapter adapter;
-    private List<Movie> movies;
 
     @BindView(R.id.movies_rec_view)
     RecyclerView moviesRecyclerView;
@@ -47,19 +47,22 @@ public class WeekMoviesFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle(getString(R.string.week_premieres_title));
         setHasOptionsMenu(true);
-        api = new MoviesApiMock(); //mock
 
         initAdapter();
-
         moviesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         moviesRecyclerView.setAdapter(adapter);
 
-        getMovies();
+        getMoviesFromDb();
     }
 
-    protected void getMovies() {
-        this.movies = api.getMovies();
-        updateUI(movies);
+
+    protected void getMoviesFromDb() {
+        final MovieDao movieDao = ((MainActivity) getActivity()).getMovieDao();
+        if (movieDao != null) {
+            final Query<Movie> movieQuery = movieDao.queryBuilder().orderDesc(MovieDao.Properties.ReleaseDate).build();
+            List<Movie> listOfMovies = movieQuery.list();
+            updateUI(listOfMovies);
+        }
     }
 
     private void initAdapter() {
@@ -88,7 +91,6 @@ public class WeekMoviesFragment extends BaseFragment {
                 final SearchView searchView = (SearchView) item.getActionView();
 
                 searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
-                searchView.setSubmitButtonEnabled(true);
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
                     @Override

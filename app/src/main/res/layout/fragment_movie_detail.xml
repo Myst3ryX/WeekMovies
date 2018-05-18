@@ -49,14 +49,13 @@
             android:textColor="@color/color_text_main" />
 
         <TextView
-            android:id="@+id/movie_detail_add_btn"
+            android:id="@+id/movie_detail_watchlist_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/movie_detail_cover"
             android:layout_marginEnd="@dimen/movie_margin_end"
             android:layout_marginStart="@dimen/movie_main_margin"
             android:layout_marginTop="@dimen/movie_main_margin"
-            android:layout_below="@+id/movie_detail_cover"
-            android:text="@string/add_to_watchlist_btn"
             android:textAppearance="@style/TextAppearance.AppCompat.Button"
             android:textColor="@color/color_text_main" />
 
@@ -64,7 +63,7 @@
             android:id="@+id/movie_detail_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/movie_detail_add_btn"
+            android:layout_below="@+id/movie_detail_watchlist_btn"
             android:layout_marginEnd="@dimen/movie_margin_end"
             android:layout_marginStart="@dimen/movie_main_margin"
             android:layout_marginTop="@dimen/movie_main_margin"
