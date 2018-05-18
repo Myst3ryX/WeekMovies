@@ -16,14 +16,12 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.myst3ry.weekmovies.BuildConfig;
 import com.myst3ry.weekmovies.R;
-import com.myst3ry.weekmovies.listeners.OnActorClickListener;
 import com.myst3ry.weekmovies.model.Actor;
 import com.myst3ry.weekmovies.model.Movie;
 import com.myst3ry.weekmovies.model.MovieToWatch;
-import com.myst3ry.weekmovies.model.MovieToWatchDao;
 import com.myst3ry.weekmovies.network.GlideApp;
-import com.myst3ry.weekmovies.ui.activity.MainActivity;
 import com.myst3ry.weekmovies.ui.adapter.ActorsAdapter;
+import com.myst3ry.weekmovies.ui.listeners.OnActorClickListener;
 
 import java.util.List;
 
@@ -35,7 +33,6 @@ public final class MovieDetailFragment extends BaseFragment {
 
     private Movie movie;
     private ActorsAdapter adapter;
-    private MovieToWatchDao movieToWatchDao;
 
     @BindView(R.id.movie_detail_cover)
     ImageView coverView;
@@ -67,8 +64,6 @@ public final class MovieDetailFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        movieToWatchDao = ((MainActivity) getActivity()).getMovieToWatchDao();
-
         initAdapter();
 
         final Bundle args = getArguments();
@@ -86,12 +81,12 @@ public final class MovieDetailFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 if (isInWatchlist(movie)) {
-                    movieToWatchDao.deleteByKey(movie.getId());
+                    getMovieToWatchDao().deleteByKey(movie.getId());
                     watchlistBtn.setText(R.string.add_to_watchlist_btn);
                     Toast.makeText(getActivity(), String.format(getString(R.string.removed_successful),
                             movie.getTitle()), Toast.LENGTH_SHORT).show();
                 } else {
-                    movieToWatchDao.insertOrReplace(getMovieToWatch(movie));
+                    getMovieToWatchDao().insertOrReplace(getMovieToWatch(movie));
                     watchlistBtn.setText(R.string.remove_from_watchlist_btn);
                     Toast.makeText(getActivity(), String.format(getString(R.string.added_successful),
                             movie.getTitle()), Toast.LENGTH_SHORT).show();
@@ -101,7 +96,6 @@ public final class MovieDetailFragment extends BaseFragment {
     }
 
     private void showContent(@NonNull final Movie movie) {
-
         getActivity().setTitle(movie.getTitle());
 
         GlideApp.with(this)
@@ -127,7 +121,7 @@ public final class MovieDetailFragment extends BaseFragment {
     }
 
     private boolean isInWatchlist(@NonNull final Movie movie) {
-        return movieToWatchDao.loadDeep(movie.getId()) != null;
+        return getMovieToWatchDao().loadDeep(movie.getId()) != null;
     }
 
     private MovieToWatch getMovieToWatch(@NonNull final Movie movie) {

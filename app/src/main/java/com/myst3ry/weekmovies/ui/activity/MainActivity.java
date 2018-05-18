@@ -14,29 +14,28 @@ import android.view.MenuItem;
 
 import com.myst3ry.weekmovies.R;
 import com.myst3ry.weekmovies.WeekMoviesApp;
-import com.myst3ry.weekmovies.listeners.OnActorClickListener;
-import com.myst3ry.weekmovies.listeners.OnMovieClickListener;
 import com.myst3ry.weekmovies.model.Actor;
-import com.myst3ry.weekmovies.model.DaoSession;
 import com.myst3ry.weekmovies.model.Movie;
 import com.myst3ry.weekmovies.model.MovieDao;
-import com.myst3ry.weekmovies.model.MovieToWatchDao;
 import com.myst3ry.weekmovies.network.MoviesApiMock;
 import com.myst3ry.weekmovies.ui.fragment.ActorFragment;
 import com.myst3ry.weekmovies.ui.fragment.MovieDetailFragment;
 import com.myst3ry.weekmovies.ui.fragment.WatchlistFragment;
 import com.myst3ry.weekmovies.ui.fragment.WeekMoviesFragment;
+import com.myst3ry.weekmovies.ui.listeners.OnActorClickListener;
+import com.myst3ry.weekmovies.ui.listeners.OnMovieClickListener;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public final class MainActivity extends AppCompatActivity implements OnMovieClickListener, OnActorClickListener {
 
-    private MovieDao movieDao;
-    private MovieToWatchDao movieToWatchDao;
-
+    @Inject
+    MovieDao movieDao;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.nav_view_main)
@@ -49,14 +48,10 @@ public final class MainActivity extends AppCompatActivity implements OnMovieClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        WeekMoviesApp.getDataComponent(this).inject(this);
 
         //api instance
         final MoviesApiMock api = new MoviesApiMock();
-
-        //prepare dao
-        final DaoSession daoSession = ((WeekMoviesApp) getApplication()).getDaoSession();
-        movieDao = daoSession.getMovieDao();
-        movieToWatchDao = daoSession.getMovieToWatchDao();
 
         setSupportActionBar(toolbar);
         setupDrawer();
@@ -120,14 +115,6 @@ public final class MainActivity extends AppCompatActivity implements OnMovieClic
     public void onActorClick(@NonNull final Actor actor) {
         final Fragment fragment = ActorFragment.newInstance(actor);
         switchContent(fragment);
-    }
-
-    public MovieDao getMovieDao() {
-        return movieDao;
-    }
-
-    public MovieToWatchDao getMovieToWatchDao() {
-        return movieToWatchDao;
     }
 
     @Override

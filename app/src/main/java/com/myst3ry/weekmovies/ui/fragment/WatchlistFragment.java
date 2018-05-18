@@ -11,8 +11,6 @@ import android.widget.TextView;
 import com.myst3ry.weekmovies.R;
 import com.myst3ry.weekmovies.model.Movie;
 import com.myst3ry.weekmovies.model.MovieToWatch;
-import com.myst3ry.weekmovies.model.MovieToWatchDao;
-import com.myst3ry.weekmovies.ui.activity.MainActivity;
 
 import org.greenrobot.greendao.query.Query;
 
@@ -37,12 +35,10 @@ public final class WatchlistFragment extends WeekMoviesFragment {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle(getString(R.string.watchlist_title));
 
-        final MovieToWatchDao movieToWatchDao = ((MainActivity) getActivity()).getMovieToWatchDao();
-
-        if (movieToWatchDao != null) {
+        if (getMovieToWatchDao() != null) {
             final List<Movie> movies = new ArrayList<>();
 
-            final Query<MovieToWatch> movieToWatchQuery = movieToWatchDao.queryBuilder().build();
+            final Query<MovieToWatch> movieToWatchQuery = getMovieToWatchDao().queryBuilder().build();
             final List<MovieToWatch> watchlist = movieToWatchQuery.list();
 
             for (MovieToWatch mtw : watchlist) {

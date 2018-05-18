@@ -15,11 +15,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.myst3ry.weekmovies.BuildConfig;
 import com.myst3ry.weekmovies.R;
-import com.myst3ry.weekmovies.listeners.OnMovieClickListener;
 import com.myst3ry.weekmovies.model.Actor;
 import com.myst3ry.weekmovies.model.Movie;
 import com.myst3ry.weekmovies.network.GlideApp;
 import com.myst3ry.weekmovies.ui.adapter.MoviesAdapter;
+import com.myst3ry.weekmovies.ui.listeners.OnMovieClickListener;
 
 import java.util.List;
 

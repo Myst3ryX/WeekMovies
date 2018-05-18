@@ -11,9 +11,9 @@ import android.widget.TextView;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.myst3ry.weekmovies.R;
-import com.myst3ry.weekmovies.listeners.OnActorClickListener;
 import com.myst3ry.weekmovies.model.Actor;
 import com.myst3ry.weekmovies.network.GlideApp;
+import com.myst3ry.weekmovies.ui.listeners.OnActorClickListener;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.myst3ry.weekmovies.listeners;
+package com.myst3ry.weekmovies.ui.listeners;
 
 import android.support.annotation.NonNull;
 

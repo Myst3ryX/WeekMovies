@@ -17,11 +17,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.myst3ry.weekmovies.R;
-import com.myst3ry.weekmovies.listeners.OnMovieClickListener;
 import com.myst3ry.weekmovies.model.Movie;
 import com.myst3ry.weekmovies.model.MovieDao;
 import com.myst3ry.weekmovies.ui.activity.MainActivity;
 import com.myst3ry.weekmovies.ui.adapter.MoviesAdapter;
+import com.myst3ry.weekmovies.ui.listeners.OnMovieClickListener;
 
 import org.greenrobot.greendao.query.Query;
 
@@ -55,16 +55,6 @@ public class WeekMoviesFragment extends BaseFragment {
         getMoviesFromDb();
     }
 
-
-    protected void getMoviesFromDb() {
-        final MovieDao movieDao = ((MainActivity) getActivity()).getMovieDao();
-        if (movieDao != null) {
-            final Query<Movie> movieQuery = movieDao.queryBuilder().orderDesc(MovieDao.Properties.ReleaseDate).build();
-            List<Movie> listOfMovies = movieQuery.list();
-            updateUI(listOfMovies);
-        }
-    }
-
     private void initAdapter() {
         if (!(getActivity() instanceof OnMovieClickListener)) {
             throw new IllegalArgumentException("Activity should implements OnMovieClickListener");
@@ -72,7 +62,14 @@ public class WeekMoviesFragment extends BaseFragment {
         adapter = new MoviesAdapter((OnMovieClickListener) getActivity());
     }
 
-    public void updateUI(@NonNull List<Movie> movies) {
+    private void getMoviesFromDb() {
+        final Query<Movie> movieQuery = getMovieDao().queryBuilder().orderDesc(MovieDao.Properties.ReleaseDate).build();
+        List<Movie> listOfMovies = movieQuery.list();
+        updateUI(listOfMovies);
+
+    }
+
+    protected void updateUI(@NonNull List<Movie> movies) {
         adapter.setMovies(movies);
     }
 
