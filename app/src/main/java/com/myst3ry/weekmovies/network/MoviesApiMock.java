@@ -10,7 +10,7 @@ public final class MoviesApiMock {
 
     private final List<Movie> movies;
 
-    public MoviesApiMock() {
+    MoviesApiMock() {
         movies = new ArrayList<>();
         fillMoviesList();
         addMoviesListToActors();

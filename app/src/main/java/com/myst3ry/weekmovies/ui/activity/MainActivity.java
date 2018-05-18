@@ -35,7 +35,10 @@ import butterknife.ButterKnife;
 public final class MainActivity extends AppCompatActivity implements OnMovieClickListener, OnActorClickListener {
 
     @Inject
+    MoviesApiMock apiMock;
+    @Inject
     MovieDao movieDao;
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.nav_view_main)
@@ -50,14 +53,11 @@ public final class MainActivity extends AppCompatActivity implements OnMovieClic
         ButterKnife.bind(this);
         WeekMoviesApp.getDataComponent(this).inject(this);
 
-        //api instance
-        final MoviesApiMock api = new MoviesApiMock();
-
         setSupportActionBar(toolbar);
         setupDrawer();
 
         if (savedInstanceState == null) {
-            final List<Movie> movies = api.getMovies();
+            final List<Movie> movies = apiMock.getMovies(); //get it with rx
             movieDao.insertOrReplaceInTx(movies);
             initUI();
         }
